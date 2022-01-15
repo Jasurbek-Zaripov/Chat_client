@@ -7,6 +7,7 @@ app.use(express.static(join(process.cwd(), 'public')))
 app.get('/', (req, res) => {
   res.sendFile(join(process.cwd(), 'index.html'))
 })
+
 app.get('/:file', (req, res) => {
   try {
     if (['login', 'register'].includes(req.params.file)) {
