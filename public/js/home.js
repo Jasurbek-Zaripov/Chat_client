@@ -63,6 +63,7 @@ setTimeout(async function recursive() {
   if (res['ERROR']) {
     if (res['ERROR'].includes('jwt expired')) {
       await REF_token()
+      await recursive()
       return
     }
     return alert(res['ERROR'])
@@ -128,7 +129,10 @@ function renderAllUser(data) {
         headerOnline.innerHTML = isActive ? 'online' : 'offline'
         sendBtn.id = userId
         document.title = username
-        localStorage.setItem('U', userId)
+        localStorage.setItem(
+          'U',
+          JSON.stringify({ src: host + photo, username, userId })
+        )
         renderSingleUserMessage(messages)
       }
 
@@ -162,7 +166,10 @@ function renderAllUser(data) {
           headerOnline.innerHTML = isActive ? 'online' : 'offline'
           sendBtn.id = userId
           document.title = username
-          localStorage.setItem('U', userId)
+          localStorage.setItem(
+            'U',
+            JSON.stringify({ src: host + photo, username, userId })
+          )
           renderSingleUserMessage(messages)
         }
         MyAllUser.append(qwe)
@@ -170,8 +177,14 @@ function renderAllUser(data) {
       dashboardAllUser.append(div)
     }
   }
-  if (localStorage.getItem('U')) {
-    renderSingleUserMessage(data[localStorage.getItem('U')]['messages'])
+  let U_local = localStorage.getItem('U')
+  if (U_local) {
+    U_local = JSON.parse(U_local)
+    headerImg.src = U_local.src
+    headerName.innerHTML = U_local.username
+    sendBtn.id = U_local.userId
+    document.title = U_local.username
+    renderSingleUserMessage(data[U_local.userId]['messages'])
   }
 }
 
@@ -291,6 +304,8 @@ async function sendBtnFun() {
     //valid date
     sendMessageInp.innerHTML = null
     sendMessageInp.value = null
+    sendAudio.innerHTML = null
+    blob = null
   } catch (xato) {
     console['log'](xato)
   }

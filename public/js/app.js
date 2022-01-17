@@ -12,17 +12,27 @@ if (navigator.mediaDevices.getUserMedia) {
 
   let onSuccess = function (stream) {
     const mediaRecorder = new MediaRecorder(stream)
-
+    // for show second---
+    let idInterval
+    let secondFun = () => {
+      let i = 0
+      idInterval = setInterval(() => {
+        sendAudio.innerHTML = i
+        i++
+      }, 1000)
+    }
+    let secondFunDel = () => clearInterval(idInterval)
+    //-------------------
     sendAudio.onmousedown = function () {
+      sendAudio.style.color = 'red'
       mediaRecorder.start()
-      console.log('state start: ', mediaRecorder.state)
+      secondFun()
     }
 
     sendAudio.onmouseup = function () {
+      sendAudio.style.color = 'white'
       mediaRecorder.stop()
-      console.log('state stop: ', mediaRecorder.state)
-
-      // mediaRecorder.requestData()
+      secondFunDel()
     }
 
     mediaRecorder.onstop = function (e) {
