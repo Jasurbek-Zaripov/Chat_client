@@ -121,7 +121,7 @@ function renderAllUser(data) {
       let div = document.createElement('div')
       div.className = 'row sideBar-body'
       div.id = userId
-      div.style.backgroundColor = '#' + myColor
+      div.style.backgroundColor = myColor
 
       div.onclick = () => {
         headerImg.src = host + photo
@@ -282,7 +282,7 @@ async function sendBtnFun() {
     let tkn = localStorage.getItem('access_token')
 
     if (!tkn) return alert('token yuq!')
-
+    sendMessageInp.value = 'Junatilmoqda kuting...'
     let res = await fetch(host + '/private/msg', {
       method: 'PUT',
       headers: {
@@ -290,7 +290,6 @@ async function sendBtnFun() {
       },
       body: fd,
     })
-
     res = await res.json()
 
     if (res['ERROR']) {
@@ -302,8 +301,13 @@ async function sendBtnFun() {
       return alert(res['ERROR'])
     }
     //valid date
-    sendMessageInp.innerHTML = null
-    sendMessageInp.value = null
+    sendMessageInp.value = 'muvaffaqiyatli Junatildi!'
+    sendMessageInp.style.color = 'red'
+    setTimeout(() => {
+      sendMessageInp.innerHTML = null
+      sendMessageInp.value = null
+      sendMessageInp.style.color = 'black'
+    }, 1000)
     sendAudio.innerHTML = null
     blob = null
   } catch (xato) {

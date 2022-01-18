@@ -19,4 +19,4 @@ app.get('/:file', (req, res) => {
   }
 })
 
-app.listen(9080, () => console['log']('client: http://localhost:9080'))
+app.listen(9080, () => console['log']('client: http://192.168.1.144:9080'))
