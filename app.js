@@ -1,7 +1,7 @@
 import express from 'express'
 import { join } from 'path'
 const app = express()
-
+const PORT = process.env.PORT || 9080
 app.use(express.static(join(process.cwd(), 'public')))
 
 app.get('/', (req, res) => {
@@ -19,4 +19,4 @@ app.get('/:file', (req, res) => {
   }
 })
 
-app.listen(9080, () => console['log']('client: http://192.168.1.144:9080'))
+app.listen(PORT, () => console['log']('client: http://192.168.1.144:' + PORT))
